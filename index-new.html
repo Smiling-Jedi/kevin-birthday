@@ -73,7 +73,7 @@
     }
 
     .photo-item:nth-child(1) { animation-delay: 0.2s; }
-    .photo-item:nth-child(2) { animation-delay: 0.6s; }
+    .photo-item:nth-child(3) { animation-delay: 0.6s; }
 
     .photo-item img {
       width: 100%;
@@ -88,34 +88,17 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     }
 
-    .photo-label {
-      font-size: 0.9rem;
-      color: #888;
-      margin-top: 12px;
-      letter-spacing: 1px;
-    }
-
-    .photo-label .year {
-      color: #5B8DB8;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    .arrow {
-      font-size: 2rem;
-      color: #E89B6C;
-      margin: 8px 0;
+    .message-image {
       opacity: 0;
       animation: fadeIn 1s ease 0.4s forwards;
+      padding: 20px 0;
     }
 
-    .message {
-      font-family: 'Caveat', cursive;
-      font-size: 2.6rem;
-      color: #5B8DB8;
-      line-height: 1.4;
-      font-style: italic;
-      margin-bottom: 24px;
+    .message-image img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
     .birthday {
@@ -123,14 +106,19 @@
       font-size: 2rem;
       color: #E89B6C;
       margin-top: 32px;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
 
-    .divider {
-      width: 40px;
-      height: 2px;
-      background-color: #E89B6C;
-      margin: 0 auto;
-      border-radius: 1px;
+    .birthday:hover {
+      transform: scale(1.05);
+      color: #d4763e;
+    }
+
+    .birthday-link {
+      margin-top: 32px;
     }
 
     @keyframes fadeInUp {
@@ -166,24 +154,21 @@
     </h1>
     <p class="date">2009.04.02 <span>·</span> 19:50</p>
 
-    <p class="message">kevin, be yourself with joy &amp; happiess!</p>
-    <div class="divider"></div>
-
     <div class="photos">
       <div class="photo-item">
         <img src="kevin-birthday/kevin-01.jpg" alt="刚出生 5 分钟">
-        <p class="photo-label"><span class="year">2009</span> · 刚出生 5 分钟</p>
       </div>
 
-      <div class="arrow">↓</div>
+      <div class="message-image">
+        <img src="message.png" alt="kevin, be yourself with joy &amp; happiess!">
+      </div>
 
       <div class="photo-item">
         <img src="kevin-birthday/17岁.jpg" alt="17 岁">
-        <p class="photo-label"><span class="year">2026</span> · 17 岁</p>
       </div>
     </div>
 
-    <p class="birthday">Happy Birthday!</p>
+    <a href="timeline.html" class="birthday">Happy Birthday!</a>
   </div>
 </body>
 </html>
