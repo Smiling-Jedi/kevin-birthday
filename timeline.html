@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin's Growth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #FDF8F3;
+      color: #3D3D3D;
+      font-family: 'Noto Serif SC', serif;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    .header .subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #5B8DB8;
+    }
+
+    .timeline {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #E89B6C 0%, #5B8DB8 50%, #E89B6C 100%);
+      transform: translateX(-50%);
+    }
+
+    .year-section {
+      position: relative;
+      margin-bottom: 60px;
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .year-section:nth-child(1) { animation-delay: 0.1s; }
+    .year-section:nth-child(2) { animation-delay: 0.2s; }
+    .year-section:nth-child(3) { animation-delay: 0.3s; }
+    .year-section:nth-child(4) { animation-delay: 0.4s; }
+    .year-section:nth-child(5) { animation-delay: 0.5s; }
+    .year-section:nth-child(6) { animation-delay: 0.6s; }
+    .year-section:nth-child(7) { animation-delay: 0.7s; }
+    .year-section:nth-child(8) { animation-delay: 0.8s; }
+
+    .year-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: #5B8DB8;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 15px rgba(91, 141, 184, 0.3);
+      z-index: 10;
+    }
+
+    .year-marker .age {
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .year-marker .year-label {
+      font-size: 0.7rem;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+
+    .year-content {
+      width: 45%;
+      padding: 20px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .year-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .year-section:nth-child(odd) .year-content {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .year-section:nth-child(even) .year-content {
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .photo-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .photo-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    .photo-grid.double {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photo-grid.triple {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto 1fr;
+    }
+
+    .photo-grid.triple img:first-child {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+    }
+
+    .photo-grid.triple img:nth-child(2),
+    .photo-grid.triple img:nth-child(3) {
+      height: 100%;
+      min-height: 150px;
+      object-fit: cover;
+    }
+
+    .photo-grid.quad {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photo-grid.quad img {
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .year-content img {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .year-content img:hover {
+      transform: scale(1.02);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 40px 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .footer .message {
+      font-family: 'Caveat', cursive;
+      font-size: 2.4rem;
+      color: #E89B6C;
+      margin-bottom: 30px;
+    }
+
+    .footer .back-link {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #5B8DB8;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .footer .back-link:hover {
+      background: #3D5A80;
+    }
+
+    .family-photo {
+      margin: 30px auto;
+      max-width: 500px;
+    }
+
+    .family-photo img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .family-caption {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.4rem;
+      color: #5B8DB8;
+      margin-top: 16px;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .timeline::before {
+        left: 30px;
+      }
+
+      .year-marker {
+        left: 30px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .year-marker .age {
+        font-size: 1rem;
+      }
+
+      .year-content {
+        width: calc(100% - 80px);
+        margin-left: 80px !important;
+        margin-right: 0 !important;
+        padding: 12px;
+      }
+
+      .photo-grid.double,
+      .photo-grid.triple,
+      .photo-grid.quad {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-grid.triple img:first-child {
+        grid-column: 1;
+        max-height: none;
+      }
+
+      .photo-grid.triple img:nth-child(2),
+      .photo-grid.triple img:nth-child(3) {
+        min-height: auto;
+      }
+
+      .year-content img {
+        max-height: 400px;
+      }
+
+      .header h1 {
+        font-size: 2.2rem;
+      }
+
+      .footer .message {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Kevin's Growth</h1>
+    <p class="subtitle">6 Years Old - 16</p>
+  </div>
+
+  <div class="timeline">
+    <!-- 6岁 2015 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">6岁</span>
+        <span class="year-label">2015</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid quad">
+          <img src="kevin-birthday/生日相册/6岁生日.JPG" alt="6岁生日">
+          <img src="kevin-birthday/生日相册/6岁生日2.JPG" alt="6岁生日">
+          <img src="kevin-birthday/生日相册/6岁生日3.JPG" alt="6岁生日">
+          <img src="kevin-birthday/生日相册/6岁生日4.JPG" alt="6岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 7岁 2016 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">7岁</span>
+        <span class="year-label">2016</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid single">
+          <img src="kevin-birthday/生日相册/7岁生日.JPG" alt="7岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 8岁 2017 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">8岁</span>
+        <span class="year-label">2017</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid triple">
+          <img src="kevin-birthday/生日相册/8岁生日.JPG" alt="8岁生日">
+          <img src="kevin-birthday/生日相册/8岁生日2.JPG" alt="8岁生日">
+          <img src="kevin-birthday/生日相册/8岁生日3.JPG" alt="8岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 9岁 2018 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">9岁</span>
+        <span class="year-label">2018</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid triple">
+          <img src="kevin-birthday/生日相册/9岁生日.JPG" alt="9岁生日">
+          <img src="kevin-birthday/生日相册/9岁生日2.JPG" alt="9岁生日">
+          <img src="kevin-birthday/生日相册/9岁生日3.JPG" alt="9岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 12岁 2021 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">12岁</span>
+        <span class="year-label">2021</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid single">
+          <img src="kevin-birthday/生日相册/12岁生日.jpg" alt="12岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 13岁 2022 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">13岁</span>
+        <span class="year-label">2022</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid single">
+          <img src="kevin-birthday/生日相册/13岁生日.jpg" alt="13岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 14岁 2023 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">14岁</span>
+        <span class="year-label">2023</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid triple">
+          <img src="kevin-birthday/生日相册/14岁生日.jpg" alt="14岁生日">
+          <img src="kevin-birthday/生日相册/14岁生日2.jpg" alt="14岁生日">
+          <img src="kevin-birthday/生日相册/14岁生日3.jpg" alt="14岁生日">
+        </div>
+      </div>
+    </div>
+
+    <!-- 16岁 2025 -->
+    <div class="year-section">
+      <div class="year-marker">
+        <span class="age">16岁</span>
+        <span class="year-label">2025</span>
+      </div>
+      <div class="year-content">
+        <div class="photo-grid single">
+          <img src="kevin-birthday/生日相册/16岁生日.jpg" alt="16岁生日">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="message">Happy Birthday!</p>
+    <div class="family-photo">
+      <img src="kevin-birthday/生日相册/开心家人.jpg" alt="开心一家人">
+      <p class="family-caption">开心一家人</p>
+    </div>
+    <a href="index.html" class="back-link">返回主页</a>
+  </div>
+</body>
+</html>
